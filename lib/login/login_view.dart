@@ -45,6 +45,7 @@ class _LoginViewState extends State<LoginView> {
                 controller: emailController,
                 hintText: "Email",
                 textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.emailAddress,
                 padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
                 validator: (value) {
                   if (value!.isEmpty) {

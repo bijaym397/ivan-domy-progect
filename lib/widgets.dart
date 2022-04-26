@@ -1,10 +1,4 @@
-import 'dart:io';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart' as p;
 
 class TextWithStyle extends StatelessWidget {
   const TextWithStyle(
@@ -92,123 +86,82 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-// class UserImage extends StatefulWidget {
-//   final Function(String imgUrl) onFileChange;
-//
-//   UserImage({required this.onFileChange, Key? key}) : super(key: key);
-//
-//   @override
-//   State<UserImage> createState() => _UserImageState();
-// }
-//
-// class _UserImageState extends State<UserImage> {
-//   final ImagePicker _picker = ImagePicker();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(top: 38, bottom: 26),
-//       child: Stack(
-//         overflow: Overflow.visible,
-//         children: [
-//           const CircleAvatar(
-//             backgroundColor: Colors.black26,
-//             radius: 55,
-//             backgroundImage: NetworkImage(
-//                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRTt3dqoY5rjkRbUMjtTaSVIlajT93qls3OQ&usqp=CAU"),
-//           ),
-//           Positioned(
-//               bottom: -4,
-//               right: -8,
-//               child: Card(
-//                 elevation: 4,
-//                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(100),
-//                 ),
-//                 child: Padding(
-//                   padding: const EdgeInsets.all(6.0),
-//                   child: GestureDetector(
-//                     child: const Icon(
-//                       Icons.edit,
-//                       size: 26,
-//                     ),
-//                     onTap: () {
-//                       _selectPhotoFrom();
-//                     },
-//                   ),
-//                 ),
-//               ))
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Future _selectPhotoFrom() async {
-//     await showBottomSheet(
-//       context: context,
-//       builder: (context) => BottomSheet(
-//         onClosing: () {},
-//         builder: (context) => Container(
-//           color: Colors.black12,
-//           height: 150,
-//           child: Column(
-//             children: [
-//               ListTile(
-//                 leading: const Icon(Icons.camera_enhance_outlined,
-//                     color: Colors.black),
-//                 title: const TextWithStyle(text: "Camera", color: Colors.black),
-//                 onTap: () {
-//                   Navigator.of(context).pop();
-//                   _pickImage(ImageSource.camera);
-//                 },
-//               ),
-//               ListTile(
-//                 leading: const Icon(Icons.add_photo_alternate_outlined,
-//                     color: Colors.black),
-//                 title:
-//                     const TextWithStyle(text: "Gallery", color: Colors.black),
-//                 onTap: () {
-//                   Navigator.of(context).pop();
-//                   _pickImage(ImageSource.gallery);
-//                 },
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   Future _pickImage(ImageSource source) async {
-//     final pickedFile =
-//         await _picker.pickImage(source: source, imageQuality: 50);
-//     if (pickedFile == null) {
-//       return;
-//     }
-//     var file = ImageCropper().cropImage(
-//         sourcePath: pickedFile.path,
-//         aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
-//     if (file == null) {
-//       return;
-//     }
-//     file = (await compressImage(file.path, 35)) as Future<File?>;
-//
-//     // await _uploadFile(file.path);
-//   }
-//
-//   Future<File> compressImage(String path, int quality) async {
-//     final newPath = p.join((await getTemporaryDirectory()).path,
-//         "${DateTime.now()}.${p.estension(path)}");
-//
-//     final result = await FlutterImageCompress.compressAndGetFile(path, newPath,
-//         quality: quality);
-//     return result;
-//   }
-//
-//   Future _uploadFile(String path) async {
-//     final ref = storage.FirebaseStorage.instance
-//         .ref()
-//         .child("images")
-//         .child(DateTime.now().toIso8601String());
-//   }
-// }
+class UserImage extends StatefulWidget {
+  @override
+  State<UserImage> createState() => _UserImageState();
+}
+
+class _UserImageState extends State<UserImage> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 38, bottom: 26),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const CircleAvatar(
+            backgroundColor: Colors.black26,
+            radius: 55,
+            backgroundImage: NetworkImage(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlR3hMw_3daUL3Uhr5Y3uJh_kMaYzyqQhhPA&usqp=CAU"),
+          ),
+          Positioned(
+              bottom: -4,
+              right: -8,
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: GestureDetector(
+                    child: const Icon(
+                      Icons.edit,
+                      size: 26,
+                    ),
+                    onTap: () {
+                      _selectPhotoFrom();
+                    },
+                  ),
+                ),
+              ))
+        ],
+      ),
+    );
+  }
+
+  Future _selectPhotoFrom() async {
+    await showBottomSheet(
+      context: context,
+      builder: (context) => BottomSheet(
+        onClosing: () {},
+        builder: (context) => Container(
+          color: Colors.black12,
+          height: 150,
+          child: Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_enhance_outlined,
+                    color: Colors.black),
+                title: const TextWithStyle(text: "Camera", color: Colors.black),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.add_photo_alternate_outlined,
+                    color: Colors.black),
+                title:
+                    const TextWithStyle(text: "Gallery", color: Colors.black),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

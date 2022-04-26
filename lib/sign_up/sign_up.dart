@@ -85,6 +85,7 @@ class _SignUpState extends State<SignUp> {
                   controller: emailController,
                   hintText: "Email",
                   textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return ("Email can't Empty");
